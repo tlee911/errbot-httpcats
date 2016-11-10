@@ -1,0 +1,10 @@
+[Core]
+name = HttpCats
+module = httpcats
+
+[Documentation]
+description = Responds to HTTP status codes with HTTP status cats
+
+[Python]
+version = 3
+
