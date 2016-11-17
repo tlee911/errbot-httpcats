@@ -4,8 +4,7 @@ python:
   - "3.5"
 
 install:
-  - pip install pytest
-  - pip install errbot
+  - pip install -r requirements_ci.txt
   - pip install -r requirements.txt
 
 script: py.test
