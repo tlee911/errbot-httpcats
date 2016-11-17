@@ -8,4 +8,4 @@ install:
   - pip install errbot
   - pip install -r requirements.txt
 
-script: pytest
+script: py.test
