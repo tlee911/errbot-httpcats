@@ -1,11 +1,11 @@
 language: python
 
 python:
-  - "2.7"
   - "3.5"
 
 install:
-  - pip install -r requirements_ci.txt
+  - pip install pytest
+  - pip install errbot
   - pip install -r requirements.txt
 
 script: pytest
