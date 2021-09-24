@@ -33,9 +33,9 @@ class HttpCats(BotPlugin):
         else:
             return 'Not a valid HTTP status code ({0})'.format(code)
 
-    @re_botcmd(pattern='http?(\s*)\d{3}', prefixed=False, flags=re.IGNORECASE)
+    @re_botcmd(pattern=r'http\s*(\d{3})', prefixed=False, flags=re.IGNORECASE)
     def re_http(self, message, match):
         """Will show the HTTP status cat for any valid code mentioned in chat"""
-        code = match.group()[-3:]
+        code = match.group(1)
         self.log.debug('Got HTTP code: {0}'.format(code))
         return self.http(message, [code])
