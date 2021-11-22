@@ -1,4 +1,4 @@
-from errbot import BotPlugin, botcmd, arg_botcmd, re_botcmd, webhook
+from errbot import BotPlugin, botcmd, re_botcmd
 import requests, re
 
 API_ROOT = 'https://http.cat/'
@@ -12,9 +12,8 @@ class HttpCats(BotPlugin):
 
     def has_cat(self, code):
         """Checks if given code has associated image"""
-        response = requests.get(self.http_cat(code))
-        status = response.status_code
-        return status == 200
+        response = requests.head(self.http_cat(code))
+        return response.status_code == 200
 
     @botcmd(split_args_with=None)
     def http(self, message, args):
@@ -23,15 +22,15 @@ class HttpCats(BotPlugin):
             return 'Usage: !http <code>'
 
         code = args[0]
-        image_url = self.http_cat(code)
-        if self.has_cat(code):
-            self.send_card(
-                in_reply_to=message,
-                image=image_url,
-                summary=image_url
-            )
-        else:
+        if not self.has_cat(code):
             return 'Not a valid HTTP status code ({0})'.format(code)
+
+        image_url = self.http_cat(code)
+        self.send_card(
+            in_reply_to=message,
+            image=image_url,
+            summary=image_url
+        )
 
     @re_botcmd(pattern=r'http\s*(\d{3})', prefixed=False, flags=re.IGNORECASE)
     def re_http(self, message, match):
